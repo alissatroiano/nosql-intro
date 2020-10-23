@@ -11,11 +11,12 @@ connection = pymysql.connect(host='localhost',
                             db='Chinook')
 try:
     # Run a query here
-    with connection.cursor() as cursor:
+    with connection.cursor(pymysql.cursors.DictCursor) as cursor:
         sql = "SELECT * FROM Artist;"
         cursor.execute(sql)
-        result = cursor.fetchall()
-        print(result)
+        for row in cursor:
+            print(row)
+
 finally:
     # Close the connection
-    connection.close()    
+    connection.close()
